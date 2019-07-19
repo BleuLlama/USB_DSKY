@@ -1,7 +1,7 @@
 ![Demo image of USB DSKY](https://raw.githubusercontent.com/BleuLlama/USB_DSKY/master/Images/04_demo_use.jpg)
 
 
-# USB_DSKY
+# USB_DSKY - Overview
 
 This is a USB and Arduino keyboard heavily inspired by the NASA/Apollo
 project's DSKY interface to the Apollo Guidance Computer (AGC)
@@ -17,7 +17,19 @@ It is implemented as matrix of Cherry MX Black keys with diodes as
 three rows and 7 columns.  Due to the use of diodes, there's no
 ghosting of keys.
 
-# Enclosure
+# Using it!
+
+I've found that the best use of this is along with
+[Moonjs: An Online Apollo Guidance Computer Simulator](http://svtsim.com/moonjs/agc.html)
+However, there is one issue.  It does not support any method to get keyboard hits in to
+the DSKY keys.  I've fixed this by creating a bookmarklet whose code is in the Emulation
+subdirectory.  Just create a new bookmark, then edit the URL for it and paste in the 
+javascript as provided.  Once you load the above page, just select that bookmkarklet 
+from your bookmarks, and it will add in a keypress catcher that will forward button
+press events to the correct DSKY buttons on the screen. 
+
+
+# The Enclosure
 
 The enclosure was made to closely reproduce the look of the real
 DSKY.  Mine was created using laser-cutting acrylic sheets (printable
@@ -33,7 +45,7 @@ gray primer, then a few coats of semi-gloss clear coat; all from
 More photos of construction and the enclosure can be found in
 the Images/ subdirectory.
 
-# Firmware
+# The Firmware
 
 The included Arduino project is for a "Pro Micro" which is based
 on the Arduino Leonardo, running an ATmega 32u4.  The wiring
@@ -47,7 +59,7 @@ whether each of the 19 buttons has changed and if it had been
 previously pressed or not.  Based on this, it will send key up
 and key down USB HID events to the host computer.
 
-# Keyboard map
+# Keyboard Map
 
 The current key mapping is:
 
@@ -64,7 +76,7 @@ The current key mapping is:
 This is the mapping for the poweron "bank 0".  You can change the content in 
 the 9 other banks to suit your application's needs.
 
-# Programmable banks
+# Reprogrammable Banks
 
 There are 10 banks of keys you can use to send different keysets.
 All programmed keycodes are stored in EEPROM.  Support for these
