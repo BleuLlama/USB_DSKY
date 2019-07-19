@@ -55,27 +55,38 @@ The current key mapping is:
 - "ENTR" sends 'e'
 - "REST" sends 'r'
 
-# Future plans
+# Programmable banks
 
-I plan on eventually adding reprogrammability to the keyboard.  My
-idea is that you press and hold a key (like "VERB") then press "PRO"
-to program a key.  Then you press the target key, then a three digit
-decimal value for the keycode. Perhaps it will use ASCII or a raw
-HID keycode. I'm not sure of that detail yet.  Any remappings would
-be stored in the EEPROM.  it might something like:
+There are 10 banks of keys you can use to send different keysets.
+All programmed keycodes are stored in EEPROM.  Support for these
+is limited currently, as it only can send single keystrokes of ASCII
+characters.  So typeable characters are OK, but meta/shift keys as
+well as multimedia keys are not supported yet.
 
-- Hold "VERB", press "PRO", release both
-- Press "3", "ENTR"
-- Type "0" "3" "5", "ENTR"
+To select one of the keymap banks, hold down [PRO], and press a
+digit key [0] to [9], then release both keys.
 
-Now, the "3" key will send ascii 35, or '#' instead.
+To reset back to the power-on starting bank (0) and clear the key
+press state, hold down [PRO] and press [RSET], then release both
+keys.  Pressing this combination four times in a row will erase the
+EEPROM and all user programmed remappings.
 
-And of course to reset it, Hold "VERB" and press "REST" to restore it.
+To remap a key in a bank, hold down [PRO], and press [KEY REL],
+then release both keys.  You're now in key code remap mode.  The
+first thing you press now is the key you want to configure.  For
+example, press [5].  Next, type in a three digit number for a base-10
+ASCII character.  For example, if you want to send a space, press
+[3], [2].  Then press [ENTR] to set the key, or [CLR] to cancel.
 
-It would also be possible to store banks of keymaps too... 
+Now, any time you're in the current bank, and you press the [5]
+button, it will send a space ' ' character.
 
-- Hold "VERB", press "NOUN", release both
-- Press "3", "ENTR"
+You can type as many digits as you want. the last three are 
+the only ones that are used.  As mentioned earlier, only ASCII
+values below 127 are allowed due to current limitations.
 
-And now it will be working out of bank 3.  Bank 0 could be the 
-pre-canned values above...
+So if you were to type [2] [4] [9] [0] [8] [3], then the value will
+be the last three, or '083'.  83 is the base-10 ASCII code for "S".
+
+Also note that bank 0 is not programmable, and will always be the
+preset values mentioned above.
