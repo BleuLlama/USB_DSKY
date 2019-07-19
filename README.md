@@ -1,3 +1,6 @@
+![Demo image of USB DSKY](https://raw.githubusercontent.com/BleuLlama/USB_DSKY/master/Images/04_demo_use.jpg)
+
+
 # USB_DSKY
 
 This is a USB and Arduino keyboard heavily inspired by the NASA/Apollo
@@ -27,6 +30,9 @@ I painted the top and bottom layers with a few thin coats of
 gray primer, then a few coats of semi-gloss clear coat; all from
 "rattle cans".
 
+More photos of construction and the enclosure can be found in
+the Images/ subdirectory.
+
 # Firmware
 
 The included Arduino project is for a "Pro Micro" which is based
@@ -54,6 +60,9 @@ The current key mapping is:
 - "KEY REL" sends 'k'
 - "ENTR" sends 'e'
 - "REST" sends 'r'
+
+This is the mapping for the poweron "bank 0".  You can change the content in 
+the 9 other banks to suit your application's needs.
 
 # Programmable banks
 
