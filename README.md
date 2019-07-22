@@ -74,7 +74,8 @@ The current key mapping is:
 - "REST" sends 'r'
 
 This is the mapping for the poweron "bank 0".  You can change the content in 
-the 9 other banks to suit your application's needs.
+the 9 other banks to suit your application's needs.  There's also a
+direct-ascii mode avaialble as well.
 
 # Reprogrammable Banks
 
@@ -106,8 +107,35 @@ You can type as many digits as you want. the last three are
 the only ones that are used.  As mentioned earlier, only ASCII
 values below 127 are allowed due to current limitations.
 
-So if you were to type [2] [4] [9] [0] [8] [3], then the value will
+So if you were to type [2],[4],[9],[0],[8],[3], then the value will
 be the last three, or '083'.  83 is the base-10 ASCII code for "S".
+On unixy systems, you can type "man ascii" to get the table of 
+values you can use.  Look for "The decimal set".
 
 Also note that bank 0 is not programmable, and will always be the
 preset values mentioned above.
+
+# Direct ASCII Mode
+
+There is also a direct ASCII mode.  you hold down [PRO], press 
+[NOUN] and then release them both, it will be in Direct ASCII mode.
+
+In this mode, you can type digits as above, then when you press [ENTR],
+it will immediately send the character value entered. 
+
+Press [CLR] to clear out the current value, [ENTR] to send the current
+value, and [RSET] to exit from this mode.
+
+For example, to send the string "Hello!\n", you would type:
+
+- [PRO]+[NOUN]			to enter the mode
+- [7],[2],[ENTR],[1],[0],[1],[ENTR]		'H', 'e'
+- [1],[0],[8],[ENTR],[ENTR]				'l', 'l'
+- [1],[1],[1],[ENTR]					'o'
+- [0],[3],[3],[ENTR]					'!'
+- [0],[1],[0],[ENTR]					'\n'
+
+
+Note that as above, there's a rolling window of three digits, and you're
+entering a decimal value.
+As above, values above 127 will not work currently.

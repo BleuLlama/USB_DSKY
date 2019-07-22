@@ -7,8 +7,9 @@
 #include <EEPROM.h>
 
 // Versioning info
-#define kVERSION  "v1.1 2019-07-18 SDL"
-//  1.1 - added key remapping
+#define kVERSION  "v1.2 2019-07-22 SDL"
+// 1.2 - added meta-noun for ascii character input
+// 1.1 - added key remapping
 // 1.0 - initial version
 //
 
@@ -211,6 +212,12 @@ void MetaPressed( int r, int c )
       metaMode = 255;
       break;
     */
+    /*
+    case( 'v' ):
+      LEDMode( 1 );
+      programMode = 4;
+      break;
+    */
 
     case ( 'k' ):
       LEDMode( 1 );
@@ -220,7 +227,12 @@ void MetaPressed( int r, int c )
       prgBuf[2] = '0';
       prgBuf[3] = '\0';
       break;
-
+      
+    case( 'n' ):
+      LEDMode( 1 );
+      programMode = 10; // DIRECT ASCII MODE
+      break;
+      
     default:
       break;
   }
@@ -259,11 +271,40 @@ size_t kPress(uint8_t k)
 //  1: get 3 digit code (roll digits through a 3 byte array
 //  2: if 'c' clear, then exit to run mode
 //  3: if 'e' enter, then store value to eeprom
+//
+//  10: for ASCII number, get 3 digit code (1) above)
+//    
 
 void KeyPressed( int r, int c )
 {
   int baseCode = keyCodes[r][c];
 
+  // direct ASCII mode
+  if( programMode == 10 ) {
+    if ( baseCode >= '0' && baseCode <= '9' ) {
+      prgBuf[0] = prgBuf[1];
+      prgBuf[1] = prgBuf[2];
+      prgBuf[2] = baseCode;
+#ifdef kDebugMode
+      Serial.print( "Current value: " );
+      Serial.println( prgBuf );
+#endif
+    }
+    if( baseCode == 'c' ) {
+      prgBuf[0] = prgBuf[1] = prgBuf[2] = '0';  // CLR clears the digits
+    }
+    if( baseCode == 'r' ) { // RSET exits
+      programMode = 0;
+    }
+    if ( baseCode == 'e' ) { // ENTR accepts changes
+      Keyboard.press( atoi( prgBuf ) );
+      delay( 20 );
+      Keyboard.release(  atoi( prgBuf ) );
+    }
+    return;
+  }
+  
+  // programming mode - phase 1: enter the mode
   if ( programMode == 1 ) {
     programR = r;
     programC = c;
@@ -279,6 +320,7 @@ void KeyPressed( int r, int c )
     return;
   }
 
+  // programming mode: phase 2: enter digits/clear/accept
   if ( programMode == 2 ) {
 #ifdef kDebugMode
     Serial.println( prgBuf );
